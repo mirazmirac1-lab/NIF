@@ -65,6 +65,18 @@
       <h2>Leader Access</h2>
       <form id="leadersAccessForm">
         <div class="form-group">
+          <label for="leaderUsername">Username</label>
+          <input type="text" id="leaderUsername" name="username" required />
+        </div>
+        <div class="form-group">
+          <label for="leaderPhone">Phone</label>
+          <input type="tel" id="leaderPhone" name="phone" required />
+        </div>
+        <div class="form-group">
+          <label for="leaderPassword">Password</label>
+          <input type="password" id="leaderPassword" name="password" required />
+        </div>
+        <div class="form-group">
           <label for="department">Department</label>
           <select id="department" name="department" required>
             <option value="">Select department</option>
@@ -74,10 +86,6 @@
             <option value="charity">Charity</option>
             <option value="hq">HQ</option>
           </select>
-        </div>
-        <div class="form-group">
-          <label for="leader-passcode">Passcode</label>
-          <input type="password" id="leader-passcode" name="passcode" required />
         </div>
         <div class="form-actions"><button class="btn" type="submit">Request Access</button></div>
       </form>

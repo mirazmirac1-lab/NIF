@@ -27,7 +27,11 @@
     .form-group input, .form-group select { width: 100%; padding: 14px 16px; border: 1px solid rgba(0,0,0,0.12); border-radius: 14px; font-size: 0.95rem; }
     .form-actions { margin-top: 22px; }
     .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 24px; border-radius: 999px; border: none; cursor: pointer; color: #111; background: var(--accent); font-weight: 700; }
+    .helper-text { margin-top: 8px; color: var(--muted); font-size: 0.95rem; }
+    .pending-list { margin-top: 16px; display: grid; gap: 10px; }
+    .pending-item { border: 1px solid rgba(0,0,0,0.08); border-radius: 14px; padding: 12px 14px; background: #fcfbf7; }
     footer { margin-top: 40px; text-align: center; color: var(--muted); }
+    footer a { color: var(--accent); text-decoration: none; font-weight: 700; }
     @media (max-width: 760px) { .page { padding: 20px; } }
   </style>
 </head>
@@ -65,22 +69,39 @@
       <h2>HQ Access</h2>
       <form id="hqAccessForm">
         <div class="form-group">
-          <label for="hq-member">HQ Role</label>
-          <select id="hq-member" name="member" required>
-            <option value="">Select role</option>
-            <option value="chairperson">Chairperson</option>
-            <option value="secretary">Secretary</option>
-            <option value="treasurer">Treasurer</option>
-          </select>
+          <label for="hq-username">Username</label>
+          <input type="text" id="hq-username" name="username" required />
         </div>
         <div class="form-group">
-          <label for="hq-passcode">Passcode</label>
-          <input type="password" id="hq-passcode" name="passcode" required />
+          <label for="hq-phone">Phone</label>
+          <input type="tel" id="hq-phone" name="phone" required />
+        </div>
+        <div class="form-group">
+          <label for="hq-password">Password</label>
+          <input type="password" id="hq-password" name="password" required />
         </div>
         <div class="form-actions"><button class="btn" type="submit">Request HQ Entry</button></div>
       </form>
     </div>
-    <footer>HQ requests are logged and verified through the backend API.</footer>
+    <div class="form-card">
+      <h2>Pending Leader Registrations</h2>
+      <p class="helper-text">Review and approve any leader who registers through the member portal.</p>
+      <div id="pendingRegistrations" class="pending-list">Loading pending registrations...</div>
+      <form id="approveRegistrationForm">
+        <div class="form-group">
+          <label for="registrationId">Registration ID</label>
+          <input type="number" id="registrationId" name="registrationId" required />
+        </div>
+        <div class="form-group">
+          <label for="approvalBy">Approved By</label>
+          <input type="text" id="approvalBy" name="approvedBy" value="HQ" />
+        </div>
+        <div class="form-actions"><button class="btn" type="submit">Approve Registration</button></div>
+      </form>
+    </div>
+    <footer>
+      <p>Follow us on TikTok and Facebook: <a href="https://www.tiktok.com/@nuurulihsaanfoundation" target="_blank" rel="noreferrer">TikTok @nuurulihsaanfoundation</a> | <a href="https://www.facebook.com/nuurulihsaanfoundation" target="_blank" rel="noreferrer">Facebook Nuurul Ihsaan Foundation</a></p>
+    </footer>
   </main>
   <script src="script.js"></script>
 </body>

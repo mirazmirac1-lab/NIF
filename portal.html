@@ -27,7 +27,18 @@
     .form-group input, .form-group select { width: 100%; padding: 14px 16px; border: 1px solid rgba(0,0,0,0.12); border-radius: 14px; font-size: 0.95rem; }
     .form-actions { margin-top: 22px; }
     .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 24px; border-radius: 999px; border: none; cursor: pointer; color: #fff; background: var(--accent); font-weight: 700; }
+    .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 18px; }
+    .tab-btn { border: 1px solid rgba(0,0,0,0.1); background: #fff; color: var(--text); padding: 10px 16px; border-radius: 999px; cursor: pointer; font-weight: 700; }
+    .tab-btn.active { background: var(--accent); color: #fff; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .helper-text { margin-top: 12px; color: var(--muted); font-size: 0.95rem; }
+    .hidden { display: none; }
+    .profile-card { margin-top: 18px; padding: 20px; border-radius: 20px; background: #f8fbf8; border: 1px solid rgba(43,158,99,0.16); }
+    .profile-grid { display: grid; gap: 10px; margin-top: 12px; }
+    .profile-grid div { padding: 10px 12px; border-radius: 14px; background: #fff; border: 1px solid rgba(0,0,0,0.06); }
     footer { margin-top: 40px; text-align: center; color: var(--muted); }
+    footer a { color: var(--accent); text-decoration: none; font-weight: 700; }
     @media (max-width: 760px) { .page { padding: 20px; } }
   </style>
 </head>
@@ -51,44 +62,223 @@
       <h1>Member Portal</h1>
       <p>Register and connect with the foundation for membership benefits, announcements, and program involvement.</p>
     </section>
-    <div class="grid">
-      <article class="card">
-        <h2>Become a Member</h2>
-        <p>Join our foundation community and stay connected with activities, volunteer programs, and support services.</p>
-      </article>
-      <article class="card">
-        <h2>Member Support</h2>
-        <p>Members receive priority updates, invitations to events, and the chance to support our charitable mission.</p>
-      </article>
+    <div class="tabs" role="tablist" aria-label="Member portal sections">
+      <button class="tab-btn active" data-tab="register">Register</button>
+      <button class="tab-btn" data-tab="benefits">Benefits</button>
+      <button class="tab-btn" data-tab="support">Support</button>
+      <button class="tab-btn" data-tab="profile">My Profile</button>
     </div>
-    <div class="form-card">
-      <h2>Membership Registration</h2>
-      <form id="registrationForm">
-        <div class="form-group">
-          <label for="fullName">Full Name</label>
-          <input type="text" id="fullName" name="fullName" required />
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone</label>
-          <input type="tel" id="phone" name="phone" required />
-        </div>
-        <div class="form-group">
-          <label for="memberType">Membership Type</label>
-          <select id="memberType" name="memberType" required>
-            <option value="">Select a type</option>
-            <option value="Volunteer">Volunteer</option>
-            <option value="Sponsor">Sponsor</option>
-            <option value="Supporter">Supporter</option>
-          </select>
-        </div>
-        <div class="form-actions"><button class="btn" type="submit">Submit Registration</button></div>
-      </form>
-    </div>
-    <footer>Form entries are saved through the backend API so membership requests are recorded immediately.</footer>
+
+    <section id="register" class="tab-panel active">
+      <div class="form-card">
+        <h2>Membership Registration</h2>
+        <form id="memberRegistrationForm">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" required />
+          </div>
+          <div class="form-group">
+            <label for="username">Portal Username</label>
+            <input type="text" id="username" name="username" required />
+          </div>
+          <div class="form-group">
+            <label for="portalPassword">Portal Password</label>
+            <input type="password" id="portalPassword" name="password" required />
+          </div>
+          <div class="form-group">
+            <label for="registrationType">Registration Type</label>
+            <select id="registrationType" name="registrationType" required>
+              <option value="member">Member</option>
+              <option value="leader">Leader</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="memberType">Membership Type</label>
+            <select id="memberType" name="memberType" required>
+              <option value="">Select a type</option>
+              <option value="Volunteer">Volunteer</option>
+              <option value="Sponsor">Sponsor</option>
+              <option value="Supporter">Supporter</option>
+            </select>
+          </div>
+          <div class="form-group hidden" id="departmentGroup">
+            <label for="department">Department</label>
+            <select id="department" name="department">
+              <option value="">Select department</option>
+              <option value="finance">Finance</option>
+              <option value="information">Information</option>
+              <option value="education">Education</option>
+              <option value="charity">Charity</option>
+            </select>
+          </div>
+          <div class="form-group hidden" id="leadershipRoleGroup">
+            <label for="leadershipRole">Leadership Role</label>
+            <input type="text" id="leadershipRole" name="leadershipRole" placeholder="e.g. Team Lead" />
+          </div>
+          <p class="helper-text" id="leaderApprovalNote">Leader registrations are reviewed by HQ before access is approved.</p>
+          <div class="form-actions"><button class="btn" type="submit">Submit Registration</button></div>
+        </form>
+      </div>
+    </section>
+
+    <section id="benefits" class="tab-panel">
+      <div class="grid">
+        <article class="card">
+          <h2>Become a Member</h2>
+          <p>Join our foundation community and stay connected with activities, volunteer programs, and support services.</p>
+        </article>
+        <article class="card">
+          <h2>Member Support</h2>
+          <p>Members receive priority updates, invitations to events, and the chance to support our charitable mission.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="support" class="tab-panel">
+      <div class="grid">
+        <article class="card">
+          <h2>Leadership Review</h2>
+          <p>Leader registrations are routed to HQ for approval so leadership access is secure and verified.</p>
+        </article>
+        <article class="card">
+          <h2>Community Impact</h2>
+          <p>Every registered member helps extend the reach of our outreach, education, and charity work.</p>
+        </article>
+      </div>
+      <div class="form-card">
+        <h2>Verify Leader OTP</h2>
+        <form id="otpVerifyForm">
+          <div class="form-group">
+            <label for="otpUsername">Username</label>
+            <input type="text" id="otpUsername" name="username" required />
+          </div>
+          <div class="form-group">
+            <label for="otpPhone">Phone</label>
+            <input type="tel" id="otpPhone" name="phone" required />
+          </div>
+          <div class="form-group">
+            <label for="otpCode">OTP</label>
+            <input type="text" id="otpCode" name="otp" required />
+          </div>
+          <div class="form-actions"><button class="btn" type="submit">Verify OTP</button></div>
+        </form>
+      </div>
+      <div class="form-card">
+        <h2>IT Confirmation</h2>
+        <form id="itConfirmForm">
+          <div class="form-group">
+            <label for="itUsername">IT Username</label>
+            <input type="text" id="itUsername" name="itUsername" required />
+          </div>
+          <div class="form-group">
+            <label for="itPhone">IT Phone</label>
+            <input type="tel" id="itPhone" name="itPhone" required />
+          </div>
+          <div class="form-group">
+            <label for="itPassword">IT Password</label>
+            <input type="password" id="itPassword" name="itPassword" required />
+          </div>
+          <div class="form-group">
+            <label for="targetUsername">Target Leader Username</label>
+            <input type="text" id="targetUsername" name="targetUsername" required />
+          </div>
+          <div class="form-actions"><button class="btn" type="submit">Confirm HQ Member</button></div>
+        </form>
+      </div>
+      <div class="form-card">
+        <h2>Edit Member Details</h2>
+        <p class="helper-text">Finance leaders can update an existing member’s profile after signing in with their confirmed credentials.</p>
+        <form id="memberEditForm">
+          <div class="form-group">
+            <label for="editMemberId">Member ID</label>
+            <input type="number" id="editMemberId" name="memberId" required />
+          </div>
+          <div class="form-group">
+            <label for="editFinanceUsername">Finance Leader Username</label>
+            <input type="text" id="editFinanceUsername" name="username" required />
+          </div>
+          <div class="form-group">
+            <label for="editFinancePhone">Finance Leader Phone</label>
+            <input type="tel" id="editFinancePhone" name="phone" required />
+          </div>
+          <div class="form-group">
+            <label for="editFinancePassword">Finance Leader Password</label>
+            <input type="password" id="editFinancePassword" name="password" required />
+          </div>
+          <div class="form-group">
+            <label for="editFinanceDepartment">Finance Leader Department</label>
+            <input type="text" id="editFinanceDepartment" name="department" value="finance" required />
+          </div>
+          <div class="form-group">
+            <label for="editFullName">New Full Name</label>
+            <input type="text" id="editFullName" name="fullName" />
+          </div>
+          <div class="form-group">
+            <label for="editEmail">New Email</label>
+            <input type="email" id="editEmail" name="email" />
+          </div>
+          <div class="form-group">
+            <label for="editPhone">New Phone</label>
+            <input type="tel" id="editPhone" name="memberPhone" />
+          </div>
+          <div class="form-group">
+            <label for="editMemberType">New Membership Type</label>
+            <select id="editMemberType" name="memberType">
+              <option value="">Leave unchanged</option>
+              <option value="Volunteer">Volunteer</option>
+              <option value="Sponsor">Sponsor</option>
+              <option value="Supporter">Supporter</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editStatus">New Status</label>
+            <select id="editStatus" name="status">
+              <option value="">Leave unchanged</option>
+              <option value="active">Active</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+          <div class="form-actions"><button class="btn" type="submit">Update Member</button></div>
+        </form>
+      </div>
+    </section>
+    <section id="profile" class="tab-panel">
+      <div class="form-card">
+        <h2>Member Sign In</h2>
+        <p class="helper-text">Use the username, phone, and password you created during registration to access your personal member portal.</p>
+        <form id="memberLoginForm">
+          <div class="form-group">
+            <label for="memberLoginUsername">Username</label>
+            <input type="text" id="memberLoginUsername" name="username" required />
+          </div>
+          <div class="form-group">
+            <label for="memberLoginPhone">Phone</label>
+            <input type="tel" id="memberLoginPhone" name="phone" required />
+          </div>
+          <div class="form-group">
+            <label for="memberLoginPassword">Password</label>
+            <input type="password" id="memberLoginPassword" name="password" required />
+          </div>
+          <div class="form-actions"><button class="btn" type="submit">Sign In</button></div>
+        </form>
+      </div>
+      <div id="memberProfilePanel" class="profile-card hidden">
+        <h2>Your Member Details</h2>
+        <div id="memberProfileContent" class="profile-grid"></div>
+        <div class="form-actions"><button class="btn" type="button" id="memberLogoutBtn">Logout</button></div>
+      </div>
+    </section>
+    <footer>
+      <p>Follow us on TikTok and Facebook: <a href="https://www.tiktok.com/@nuurulihsaanfoundation" target="_blank" rel="noreferrer">TikTok @nuurulihsaanfoundation</a> | <a href="https://www.facebook.com/nuurulihsaanfoundation" target="_blank" rel="noreferrer">Facebook Nuurul Ihsaan Foundation</a></p>
+    </footer>
   </main>
   <script src="script.js"></script>
 </body>
